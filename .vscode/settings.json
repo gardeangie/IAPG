@@ -1,0 +1,4 @@
+//place ur settings in this file to overwrite default and user settings.
+{
+    "javascript.validate.enable":false
+}
