@@ -5,6 +5,8 @@
  * Created by albertoclarit on 4/18/16.
  */
 import React from 'react';
+import TodoItem from './TodoItem';
+//'./' - within the same folder '../outside' 
 
 export default  class TodoApp extends React.Component{
 
@@ -21,14 +23,14 @@ export default  class TodoApp extends React.Component{
         
     }
 
-onChange(e){
+onChange=(e)=>{
     this.setState({
         mytodo:e.target.value
     })
-}
+};
 
 
-onKeyUp(e){
+onKeyUp=(e)=>{
      if( e.key==='Enter' )
      {
         let tmp =this.state.list;
@@ -38,26 +40,40 @@ onKeyUp(e){
         mytodo:''
     })
 }
-}
+};
 
+    deleteMe=(index)=>{
+        var tmp=this.state.list;
+        tmp.splice(index,1);
+        this.setState({
+            list:tmp
+        });
+    };
+    
     render(){
         
         let items=[];
         for(var i=0;i<this.state.list.length;i++){
-                items.push(<li key={i}>{this.state.list[i]}</li>);
+                items.push(<TodoItem key={i} 
+                                      description={this.state.list[i]}
+                                      index={i}
+                                      removeMe={this.deleteMe}
+                                      />);
         }
+        
+   
         return (
-            <div>
-            <font color="darkblue"><h1>My Todo List</h1>
+            <div className="todoapp">
+            <font color="darkblue"><h1 className="header">My Todo List</h1>
             </font>
-            <input type="type" onChange={this.onChange.bind(this)}
-            value={this.state.mytodo}
-             onKeyUp={this.onKeyUp.bind(this)}/>
-            <ol>
+            <input type="type" onChange={this.onChange}
+                   value={this.state.mytodo}
+                   onKeyUp={this.onKeyUp}/>
+        
             {items}
-            </ol>
+          
             </div>
-    )
+        )  
     }
 }
 
